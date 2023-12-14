@@ -31,7 +31,7 @@ module.exports = mongoDB;
 */
 
 const mongoose = require('mongoose')
-const mongoURI = "mongodb+srv://vinith2003:8a4QRLyW62smFMgr@cluster0.udcas1q.mongodb.net/foodpandamern?retryWrites=true&w=majorit";
+const mongoURI = "mongodb+srv://vinith2003:8a4QRLyW62smFMgr@cluster0.udcas1q.mongodb.net/foodpandamern?retryWrites=true&w=majority";
 
 module.exports = async () => {
   try {

@@ -2,12 +2,11 @@ const express = require("express");
 const router = express.Router();
 const Order = require("../models/Orders");
 
-{/*
-router.post("/orderData", async (req, res) => {
+router.post('/orderData', async (req, res) => {
   let data = req.body.order_data;
-  await data.slice(0, 0, { Order_date: req.body.order_data });
+  await data.splice(0, 0, { Order_date: req.body.order_date });
 
-  // if email is not existing in db then creat e InsertMany()
+  // if email is not existing in db then creat e In sertMany()
   let eId = await Order.findOne({ email: req.body.email });
   console.log(eId);
   if (eId == null) {
@@ -15,8 +14,8 @@ router.post("/orderData", async (req, res) => {
       await Order.create({
         email: req.body.email,
         order_data: [data],
-      }).then(() => {
-        res.join({ success: true });
+      }).then(async (res) => {
+        res.json({ success: true });
       });
     } catch (error) {
       console.error(error.message);
@@ -29,53 +28,27 @@ router.post("/orderData", async (req, res) => {
         {
           $push: { order_data: data }
         }
-      ).then(() => {
-        res.join({ success: true });
+      ).then(async (res) => {
+        res.json({ success: true });
       });
     } catch (error) {
       console.error(error.message);
-      res.send("ServerError", error.message);
+      res.status(404).send({ message: "Resource not found" });
     }
   }
 });
-*/}
 
-router.post('/orderData', async (req, res) => {
-    let data = req.body.order_data
-    await data.splice(0,0,{Order_date:req.body.order_date})
-    console.log("1231242343242354",req.body.email)
+router.post('/myOrderData', async (req, res) => {
+  try {
+      console.log(req.body.email)
+      let myData = await Order.findOne({ 'email': req.body.email })
+      //console.log(eId)
+      res.json({orderData:myData})
+  } catch (error) {
+      res.send("Error",error.message)
+  }
+  
 
-    //if email not exisitng in db then create: else: InsertMany()
-    let eId = await Order.findOne({ 'email': req.body.email })    
-    console.log(eId)
-    if (eId===null) {
-        try {
-            console.log(data)
-            console.log("123124234324235",req.body.email)
-            await Order.create({
-                email: req.body.email,
-                order_data:[data]
-            }).then(() => {
-                res.json({ success: true })
-            })
-        } catch (error) {
-            console.log(error.message)
-            res.send("Server Error", error.message)
-
-        }
-    }
-
-    else {
-        try {
-            await Order.findOneAndUpdate({email:req.body.email},
-                { $push:{order_data: data} }).then(() => {
-                    res.json({ success: true })
-                })
-        } catch (error) {
-            console.log(error.message)
-            res.send("Server Error", error.message)
-        }
-    }
-})
+});
 
 module.exports = router;
