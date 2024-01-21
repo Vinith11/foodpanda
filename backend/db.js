@@ -30,8 +30,9 @@ const mongoDB = async () => {
 module.exports = mongoDB;
 */
 
+require("dotenv").config();
 const mongoose = require('mongoose')
-const mongoURI = "mongodb+srv://vinith2003:8a4QRLyW62smFMgr@cluster0.udcas1q.mongodb.net/foodpandamern?retryWrites=true&w=majority";
+const mongoURI = process.env.MONGO_URI;
 
 module.exports = async () => {
   try {
