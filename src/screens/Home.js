@@ -143,7 +143,7 @@ function Home() {
             );
           })
         ) : (
-          <div>hhkjj</div>
+          <div>No Data</div>
         )}
       </div>
 
